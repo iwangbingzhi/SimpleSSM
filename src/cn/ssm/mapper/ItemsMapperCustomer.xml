@@ -1,0 +1,21 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.ssm.mapper.ItemsMapperCustomer">
+    <!--生成sql片段-->
+    <sql id="query_items_where">
+        <if test="itemsCustomer!=null">
+            <if test="itemsCustomer.name!=null and itemsCustomer.name!=''">
+                NAME LIKE '%${itemsCustomer.name}%'
+            </if>
+        </if>
+    </sql>
+    
+    
+    <select id="findItemsList" parameterType="cn.ssm.po.ItemsQueryVo"
+            resultType="cn.ssm.po.ItemsCustomer">
+        SELECT * FROM items
+        <where>
+           <include refid="query_items_where"/>
+        </where>
+         
+    </select>
+</mapper>

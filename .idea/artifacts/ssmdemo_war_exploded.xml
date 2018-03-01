@@ -1,0 +1,20 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="ssmdemo:war exploded">
+    <output-path>$PROJECT_DIR$/out/artifacts/ssmdemo_war_exploded</output-path>
+    <root id="root">
+      <element id="javaee-facet-resources" facet="ssmdemo/web/Web" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="ssmdemo" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="junit-4.9" />
+          <element id="library" level="project" name="spring" />
+          <element id="library" level="project" name="jstl" />
+          <element id="library" level="project" name="lib" />
+          <element id="library" level="project" name="mybatis逆向工程" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>

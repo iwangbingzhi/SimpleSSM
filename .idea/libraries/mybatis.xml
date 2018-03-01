@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="mybatis逆向工程">
+    <CLASSES>
+      <root url="file://F:/javaweb类库/mybatis逆向工程" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+    <jarDirectory url="file://F:/javaweb类库/mybatis逆向工程" recursive="false" />
+  </library>
+</component>
