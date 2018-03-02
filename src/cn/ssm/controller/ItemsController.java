@@ -8,11 +8,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * @Title: ItemsController.java
@@ -62,15 +64,16 @@ public class ItemsController {
     //@RequestMapping("/editItems")
     //限制http,可以post可以get
     @RequestMapping(value = "/editItems",method={RequestMethod.GET,RequestMethod.POST})
-    public ModelAndView editItems() throws Exception{
-        ItemsCustomer itemsCustomer = itemsService.findItemsByid(1);
 
-        ModelAndView modelAndView = new ModelAndView();
+    //通过@RequestParam可以使形式参数名字和实际参数的名字不同
+    //required属性指定参数是否必须要传入，设置为true，没有传入参数，报错 "id is not present"
+    //defaultValue可以设置默认值，如果id参数没有传入，将默认值和形参绑定
+    public String editItems(Model model, @RequestParam(value = "id",required = true /*,defaultValue = ""*/) Integer items_id) throws Exception{
+        ItemsCustomer itemsCustomer = itemsService.findItemsByid(items_id);
 
-        modelAndView.addObject("itemsCustomer",itemsCustomer);
-        modelAndView.setViewName("editItems");
+        model.addAttribute("itemsCustomer",itemsCustomer);
 
-        return modelAndView;
+        return "editItems";
     }
 
 /*
