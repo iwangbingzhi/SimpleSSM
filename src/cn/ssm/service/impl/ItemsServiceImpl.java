@@ -22,7 +22,7 @@ public class ItemsServiceImpl implements ItemsService {
     }
 
     @Override
-    public ItemsCustomer findItemsByid(int id) throws Exception {
+    public ItemsCustomer findItemsByid(Integer id) throws Exception {
         //中间对商品进行业务处理
         Items items = itemsMapper.selectByPrimaryKey(id);
         //返回itemsCustomer
@@ -34,7 +34,7 @@ public class ItemsServiceImpl implements ItemsService {
     }
 
     @Override
-    public void updateItems(int id, ItemsCustomer itemsCustomer) throws Exception {
+    public void updateItems(Integer id, ItemsCustomer itemsCustomer) throws Exception {
         //添加业务校验，通常service接口对关键参数进行校验
         //校验id是否为空，如果为空抛出异常
 

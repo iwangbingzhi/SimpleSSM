@@ -28,7 +28,7 @@ import java.util.Random;
 public class ItemsController {
     @Autowired
     private ItemsService itemsService;
-  /*  //商品查询列表
+    //商品查询列表
     @RequestMapping("/queryItems")
     public ModelAndView queryItems(HttpServletRequest request) throws Exception {
         System.out.println(request.getParameter("id"));
@@ -42,13 +42,11 @@ public class ItemsController {
 
         return modelAndView;
     }
-*/
 
     //商品查询列表
-    @RequestMapping("/queryItems")
+   /* @RequestMapping("/queryItems")
     public String queryItems(Model model,HttpServletRequest request) throws Exception {
-        String id = request.getParameter("id");
-        System.out.println(id);
+        System.out.println(request.getParameter("id"));
         //调用service查找数据库，查询商品列表
         List<ItemsCustomer> itemsList = itemsService.findItemsList(null);
 
@@ -56,24 +54,24 @@ public class ItemsController {
         model.addAttribute("itemsList",itemsList);
 
         return "itemsList";
-    }
+    }*/
 
 
 
     //商品信息修改页面显示
     //@RequestMapping("/editItems")
     //限制http,可以post可以get
-    @RequestMapping(value = "/editItems",method={RequestMethod.GET,RequestMethod.POST})
+    @RequestMapping(value="/editItem",method={RequestMethod.POST,RequestMethod.GET})
 
     //通过@RequestParam可以使形式参数名字和实际参数的名字不同
     //required属性指定参数是否必须要传入，设置为true，没有传入参数，报错 "id is not present"
     //defaultValue可以设置默认值，如果id参数没有传入，将默认值和形参绑定
-    public String editItems(Model model, @RequestParam(value = "id",required = true /*,defaultValue = ""*/) Integer items_id) throws Exception{
+    public String editItem(Model model, @RequestParam(value = "id",required=true) Integer items_id) throws Exception{
         ItemsCustomer itemsCustomer = itemsService.findItemsByid(items_id);
 
         model.addAttribute("itemsCustomer",itemsCustomer);
 
-        return "editItems";
+        return "editItem";
     }
 
 /*
@@ -86,16 +84,19 @@ public class ItemsController {
         return modelAndView;
     }*/
     //商品信息修改提交 使用redirect重定向
-    @RequestMapping("/editItemsSubmit")
-    public String editItemsSubmit() throws Exception{
+    /*@RequestMapping("/editItemsSubmit")
+    public String editItemsSubmit(HttpServletRequest request,ItemsCustomer itemsCustomer,int id) throws Exception{
+        itemsService.updateItems(id, itemsCustomer);
 
         return "redirect:queryItems.action";
-}
-    /*//商品信息修改提交 使用forward转发,request可以共享
-    @RequestMapping("/editItemsSubmit")
-    public String editItemsSubmit(HttpServletRequest request) throws Exception{
 
+
+}*/
+    //商品信息修改提交 使用forward转发,request可以共享
+    @RequestMapping("/editItemsSubmit")
+    public String editItemsSubmit(HttpServletRequest request,Integer id,ItemsCustomer itemsCustomer) throws Exception{
+        itemsService.updateItems(id, itemsCustomer);
         return "forward:queryItems.action";
-    }*/
+    }
 
 }

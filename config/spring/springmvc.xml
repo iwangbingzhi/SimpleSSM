@@ -12,12 +12,23 @@
 
     <context:component-scan base-package="cn.ssm.controller"/>
 
-    <mvc:annotation-driven/>
+    <mvc:annotation-driven conversion-service="conversionService"/>
 
     <!--4.配置视图解析器
 解析jsp视图，默认使用jstl标签-->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/jsp/"/>
         <property name="suffix" value=".jsp"/>
+    </bean>
+
+    <!--自定义参数绑定-->
+    <bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+        <!--转换器-->
+        <property name="converters">
+            <list>
+                <!--日期类型转换-->
+                <bean class="cn.ssm.controller.converter.CustomDateConverter"/>
+            </list>
+        </property>
     </bean>
 </beans>

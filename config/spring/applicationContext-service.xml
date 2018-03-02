@@ -16,4 +16,5 @@
 
     <!--商品管理的service-->
     <bean id="itemsService" class="cn.ssm.service.impl.ItemsServiceImpl"/>
+
 </beans>

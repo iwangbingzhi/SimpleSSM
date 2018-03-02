@@ -16,10 +16,10 @@ public interface ItemsService {
     public List<ItemsCustomer> findItemsList(ItemsQueryVo itemsQueryVo) throws Exception;
 
     //根据id查询商品信息
-    public ItemsCustomer findItemsByid(int id) throws Exception;
+    public ItemsCustomer findItemsByid(Integer id) throws Exception;
 
     //修改商品的信息
-    public void updateItems(int id,ItemsCustomer itemsCustomer) throws Exception;
+    public void updateItems(Integer id,ItemsCustomer itemsCustomer) throws Exception;
 
 
 }
