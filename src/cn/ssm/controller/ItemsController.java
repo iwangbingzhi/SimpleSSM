@@ -2,6 +2,7 @@ package cn.ssm.controller;
 
 import cn.ssm.po.Items;
 import cn.ssm.po.ItemsCustomer;
+import cn.ssm.po.ItemsQueryVo;
 import cn.ssm.service.impl.ItemsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,11 +31,11 @@ public class ItemsController {
     private ItemsService itemsService;
     //商品查询列表
     @RequestMapping("/queryItems")
-    public ModelAndView queryItems(HttpServletRequest request) throws Exception {
+    public ModelAndView queryItems(HttpServletRequest request, ItemsQueryVo itemsQueryVo) throws Exception {
         System.out.println(request.getParameter("id"));
 
         //调用service查找数据库，查询商品列表
-        List<ItemsCustomer> itemsList = itemsService.findItemsList(null);
+        List<ItemsCustomer> itemsList = itemsService.findItemsList(itemsQueryVo);
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("itemsList", itemsList);
@@ -98,5 +99,32 @@ public class ItemsController {
         itemsService.updateItems(id, itemsCustomer);
         return "forward:queryItems.action";
     }
+    //批量删除商品信息
+    @RequestMapping("/deleteItems")
+    public String deleteItems(Integer[] items_id) throws Exception{
+        //调用service批量删除商品
+        //....
+
+    return "success";
+    }
+
+    //批量修改商品的页面,将商品信息查询出来，在页面中可以编辑商品信息
+    @RequestMapping("/editItemsQuery")
+    public String editItemsQuery(Model model,ItemsQueryVo itemsQueryVo) throws Exception{
+        List<ItemsCustomer> itemsList = itemsService.findItemsList(itemsQueryVo);
+        model.addAttribute("itemsList",itemsList);
+
+        return "editItemsQuery";
+    }
+
+    //修改商品的提交方法editItemsAllSubmit
+    //通过ItemsQueryVo接受批量提交的商品信息，将商品信息存储到ItemsQueryVo中的itemsCustomerList属性中
+    @RequestMapping("/editItemsAllSubmit")
+    public String editItemsAllSubmit(ItemsQueryVo itemsQueryVo)throws Exception{
+
+
+        return "success";
+    }
+
 
 }

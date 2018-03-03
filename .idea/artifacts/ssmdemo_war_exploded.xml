@@ -13,6 +13,7 @@
           <element id="library" level="project" name="jstl" />
           <element id="library" level="project" name="lib" />
           <element id="library" level="project" name="mybatis逆向工程" />
+          <element id="library" level="project" name="hibernate-validator" />
         </element>
       </element>
     </root>
