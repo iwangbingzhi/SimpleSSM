@@ -1,5 +1,6 @@
 package cn.ssm.service.impl;
 
+import cn.ssm.exception.CustomerException;
 import cn.ssm.mapper.ItemsMapper;
 import cn.ssm.mapper.ItemsMapperCustomer;
 import cn.ssm.po.Items;
@@ -25,11 +26,18 @@ public class ItemsServiceImpl implements ItemsService {
     public ItemsCustomer findItemsByid(Integer id) throws Exception {
         //中间对商品进行业务处理
         Items items = itemsMapper.selectByPrimaryKey(id);
+        if(items==null){
+            throw new CustomerException("修改的商品信息不存在");
+        }
+        //中间对商品信息进行业务处理
+        //......
         //返回itemsCustomer
-        ItemsCustomer itemsCustomer = new ItemsCustomer();
+        ItemsCustomer itemsCustomer = null;
         //将items的属性值拷贝到itemscustomer
-        BeanUtils.copyProperties(items,itemsCustomer);
-
+        if(items!=null){
+            itemsCustomer = new ItemsCustomer();
+            BeanUtils.copyProperties(items,itemsCustomer);
+        }
         return itemsCustomer;
     }
 

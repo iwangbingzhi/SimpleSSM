@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt"  prefix="fmt"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -26,6 +27,14 @@
 <table width="100%" border=1>
 <tr>
 	<td><input name="itemsCustomer.name"/> </td>
+
+    <%--商品分类的回显--%>
+	商品类型:
+    <select name="itemtype">
+        <c:forEach items="${itemtypes}" var="itemtype">
+            <option value="${itemtype.key}">${itemtype.value}</option>
+        </c:forEach>
+    </select>
     <td><input type="button" value="查询" onclick="queryItems()"/></td>
     <td><input type="button" value="批量删除" onclick="deleteItems()"/></td>
 

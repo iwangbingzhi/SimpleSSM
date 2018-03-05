@@ -1,5 +1,7 @@
 package cn.ssm.controller;
 
+import cn.ssm.controller.validation.ValidationGroup1;
+import cn.ssm.exception.CustomerException;
 import cn.ssm.po.Items;
 import cn.ssm.po.ItemsCustomer;
 import cn.ssm.po.ItemsQueryVo;
@@ -10,15 +12,16 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.io.File;
+import java.util.*;
 
 /**
  * @Title: ItemsController.java
@@ -32,6 +35,19 @@ import java.util.Random;
 public class ItemsController {
     @Autowired
     private ItemsService itemsService;
+
+
+    //商品分类
+    @ModelAttribute("itemtypes")
+    public Map<String,String> getItemTypes(){
+        Map<String,String> itemtypes = new HashMap<String,String>();
+        itemtypes.put("101","手机");
+        itemtypes.put("102","电脑");
+
+        return itemtypes;
+
+    }
+
     //商品查询列表
     @RequestMapping("/queryItems")
     public ModelAndView queryItems(HttpServletRequest request, ItemsQueryVo itemsQueryVo) throws Exception {
@@ -73,7 +89,10 @@ public class ItemsController {
     public String editItem(Model model, @RequestParam(value = "id",required=true) Integer items_id) throws Exception{
         ItemsCustomer itemsCustomer = itemsService.findItemsByid(items_id);
 
-        model.addAttribute("itemsCustomer",itemsCustomer);
+        if (itemsCustomer==null){
+            throw new CustomerException("修改的商品信息不存在");
+        }
+        model.addAttribute("items",itemsCustomer);
 
         return "editItem";
     }
@@ -102,8 +121,14 @@ public class ItemsController {
 // 注意：@Validated和BindingResult bindingResult是配对出现，并且形参顺序是固定的（一前一后）。
 // value={ValidGroup1.class}指定使用ValidGroup1分组的 校验
 // @ModelAttribute可以指定pojo回显到页面在request中的key
+    //@Validated(value = (ValidationGroup1.class))指定使用validationgroup1分组校验
+    //使用@ModelAttribute("items")指定pojo回显到页面在request中的key
     @RequestMapping("/editItemsSubmit")
-    public String editItemsSubmit(Model model,HttpServletRequest request, Integer id, @Validated ItemsCustomer itemsCustomer, BindingResult bindingResult) throws Exception{
+
+    public String editItemsSubmit(Model model, HttpServletRequest request,
+                                  Integer id, @ModelAttribute("items") @Validated(value = {ValidationGroup1.class}) ItemsCustomer itemsCustomer, BindingResult bindingResult,
+    MultipartFile items_pic //接收商品图片
+                                 ) throws Exception{
         //获取校验错误信息
         if(bindingResult.hasErrors()){
             //输出错误信息
@@ -118,7 +143,25 @@ public class ItemsController {
             //出错重新到商品的修改页面
             return "editItem";
         }
-        itemsService.updateItems(id, itemsCustomer);
+        //上传图片
+        String originalFilename = items_pic.getOriginalFilename();
+
+        if(items_pic!=null&&originalFilename!=null&&originalFilename.length()>0){
+            //存储图片的物理路径
+            String pic_path = "G:\\女王大人\\";
+            //得到图片的原始名称
+            //新的图片名称
+            String newfilename = UUID.randomUUID()+originalFilename.substring(originalFilename.lastIndexOf("."));
+            //新的图片
+            File newFile = new File(pic_path+newfilename);
+
+            //将内存中的数据写入磁盘
+            items_pic.transferTo(newFile);
+
+            //将新的图片名称写入到itemsCustome中
+            itemsCustomer.setPic(newfilename);
+        }
+        itemsService.updateItems(id,itemsCustomer);
 
         return "forward:queryItems.action";
     }
@@ -144,7 +187,6 @@ public class ItemsController {
     //通过ItemsQueryVo接受批量提交的商品信息，将商品信息存储到ItemsQueryVo中的itemsCustomerList属性中
     @RequestMapping("/editItemsAllSubmit")
     public String editItemsAllSubmit(ItemsQueryVo itemsQueryVo)throws Exception{
-
 
         return "success";
     }

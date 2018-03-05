@@ -1,5 +1,7 @@
 package cn.ssm.po;
 
+import cn.ssm.controller.validation.ValidationGroup1;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Date;
@@ -8,7 +10,8 @@ public class Items {
     private Integer id;
 
     //校验名称在1-30个字符中间,message提示的出错显示的信息
-    @Size(min = 1,max = 30,message = "{items.name.length.error}")
+    //groups标示此校验属于哪个分组
+    @Size(min = 1,max = 30,message = "{items.name.length.error}",groups = {ValidationGroup1.class})
     private String name;
 
     private Float price;

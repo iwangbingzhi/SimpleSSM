@@ -14,6 +14,7 @@
           <element id="library" level="project" name="lib" />
           <element id="library" level="project" name="mybatis逆向工程" />
           <element id="library" level="project" name="hibernate-validator" />
+          <element id="library" level="project" name="文件上传" />
         </element>
       </element>
     </root>

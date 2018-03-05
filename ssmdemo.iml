@@ -38,5 +38,6 @@
     <orderEntry type="library" name="junit-4.9" level="project" />
     <orderEntry type="library" name="mybatis逆向工程" level="project" />
     <orderEntry type="library" name="hibernate-validator" level="project" />
+    <orderEntry type="library" name="文件上传" level="project" />
   </component>
 </module>
