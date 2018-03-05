@@ -7,6 +7,9 @@ import cn.ssm.service.impl.ItemsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,7 +35,7 @@ public class ItemsController {
     //商品查询列表
     @RequestMapping("/queryItems")
     public ModelAndView queryItems(HttpServletRequest request, ItemsQueryVo itemsQueryVo) throws Exception {
-        System.out.println(request.getParameter("id"));
+        //System.out.println(request.getParameter("id"));
 
         //调用service查找数据库，查询商品列表
         List<ItemsCustomer> itemsList = itemsService.findItemsList(itemsQueryVo);
@@ -94,9 +97,29 @@ public class ItemsController {
 
 }*/
     //商品信息修改提交 使用forward转发,request可以共享
+// 在需要校验的pojo前边添加@Validated，在需要校验的pojo后边添加BindingResult
+// bindingResult接收校验出错信息
+// 注意：@Validated和BindingResult bindingResult是配对出现，并且形参顺序是固定的（一前一后）。
+// value={ValidGroup1.class}指定使用ValidGroup1分组的 校验
+// @ModelAttribute可以指定pojo回显到页面在request中的key
     @RequestMapping("/editItemsSubmit")
-    public String editItemsSubmit(HttpServletRequest request,Integer id,ItemsCustomer itemsCustomer) throws Exception{
+    public String editItemsSubmit(Model model,HttpServletRequest request, Integer id, @Validated ItemsCustomer itemsCustomer, BindingResult bindingResult) throws Exception{
+        //获取校验错误信息
+        if(bindingResult.hasErrors()){
+            //输出错误信息
+            List<ObjectError> allErrors = bindingResult.getAllErrors();
+            for (ObjectError objectError:allErrors
+                 ) {
+                //输出错误信息System.out.println(objectError.getDefaultMessage());
+
+            }
+            //将错误信息传到页面
+            model.addAttribute("allErrors",allErrors);
+            //出错重新到商品的修改页面
+            return "editItem";
+        }
         itemsService.updateItems(id, itemsCustomer);
+
         return "forward:queryItems.action";
     }
     //批量删除商品信息

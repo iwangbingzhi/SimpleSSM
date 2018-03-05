@@ -1,16 +1,22 @@
 package cn.ssm.po;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
 public class Items {
     private Integer id;
 
+    //校验名称在1-30个字符中间,message提示的出错显示的信息
+    @Size(min = 1,max = 30,message = "{items.name.length.error}")
     private String name;
 
     private Float price;
 
     private String pic;
 
+    //生产日期非空校验
+    @NotNull(message = "{items.create.isNULL}")
     private Date createtime;
 
     private String detail;
