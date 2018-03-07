@@ -36,7 +36,6 @@ public class ItemsController {
     @Autowired
     private ItemsService itemsService;
 
-
     //商品分类
     @ModelAttribute("itemtypes")
     public Map<String,String> getItemTypes(){
@@ -45,7 +44,6 @@ public class ItemsController {
         itemtypes.put("102","电脑");
 
         return itemtypes;
-
     }
 
     //商品查询列表
@@ -126,15 +124,14 @@ public class ItemsController {
     @RequestMapping("/editItemsSubmit")
 
     public String editItemsSubmit(Model model, HttpServletRequest request,
-                                  Integer id, @ModelAttribute("items") @Validated(value = {ValidationGroup1.class}) ItemsCustomer itemsCustomer, BindingResult bindingResult,
-    MultipartFile items_pic //接收商品图片
+                                  Integer id, @ModelAttribute("items") @Validated(value = {ValidationGroup1.class}) ItemsCustomer itemsCustomer,
+                                  BindingResult bindingResult, MultipartFile items_pic //接收商品图片
                                  ) throws Exception{
         //获取校验错误信息
         if(bindingResult.hasErrors()){
             //输出错误信息
             List<ObjectError> allErrors = bindingResult.getAllErrors();
-            for (ObjectError objectError:allErrors
-                 ) {
+            for (ObjectError objectError:allErrors) {
                 //输出错误信息System.out.println(objectError.getDefaultMessage());
 
             }
@@ -143,10 +140,11 @@ public class ItemsController {
             //出错重新到商品的修改页面
             return "editItem";
         }
+
         //上传图片
         String originalFilename = items_pic.getOriginalFilename();
 
-        if(items_pic!=null&&originalFilename!=null&&originalFilename.length()>0){
+        if(items_pic!=null && originalFilename!=null && originalFilename.length()>0){
             //存储图片的物理路径
             String pic_path = "G:\\女王大人\\";
             //得到图片的原始名称
@@ -190,6 +188,4 @@ public class ItemsController {
 
         return "success";
     }
-
-
 }
