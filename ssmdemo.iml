@@ -39,5 +39,6 @@
     <orderEntry type="library" name="mybatis逆向工程" level="project" />
     <orderEntry type="library" name="hibernate-validator" level="project" />
     <orderEntry type="library" name="文件上传" level="project" />
+    <orderEntry type="library" name="jquery-3.2.1" level="project" />
   </component>
 </module>
