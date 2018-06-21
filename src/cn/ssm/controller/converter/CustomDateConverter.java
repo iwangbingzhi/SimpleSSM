@@ -8,7 +8,7 @@ import java.util.Date;
 
 /**
  * @Title: CustomDateConverter.java
- * @Description:日期转换器
+ * @Description:ssm的日期转换器
  * @Author 王炳智
  * @Date 2018/3/2 16:40
  */

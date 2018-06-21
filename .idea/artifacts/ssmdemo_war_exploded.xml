@@ -16,6 +16,8 @@
           <element id="library" level="project" name="mybatis逆向工程" />
           <element id="library" level="project" name="hibernate-validator" />
           <element id="library" level="project" name="文件上传" />
+          <element id="library" level="project" name="springmvc加入json支持" />
+          <element id="library" level="project" name="fastjson-1.2.47" />
         </element>
       </element>
     </root>

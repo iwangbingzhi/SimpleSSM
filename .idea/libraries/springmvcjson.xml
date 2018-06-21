@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="springmvc加入json支持">
+    <CLASSES>
+      <root url="file://F:/javaweb类库/springmvc加入json支持" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+    <jarDirectory url="file://F:/javaweb类库/springmvc加入json支持" recursive="false" />
+  </library>
+</component>

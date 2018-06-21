@@ -37,4 +37,6 @@
         <property name="basePackage" value="cn.ssm.mapper"/>
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
     </bean>
+
+
 </beans>

@@ -20,6 +20,12 @@ public class JsonTest {
     @RequestMapping("/requestJson")
     public @ResponseBody ItemsCustomer requestJson(@RequestBody ItemsCustomer itemsCustomer){
 
+        //@ResponseBody将itemsCustomer转成json输出
+        return itemsCustomer;
+    }
+    //请求key value，输出json
+    @RequestMapping("/responseJson")
+    public @ResponseBody ItemsCustomer responseJson(ItemsCustomer itemsCustomer){
 
         //@ResponseBody将itemsCustomer转成json输出
         return itemsCustomer;
